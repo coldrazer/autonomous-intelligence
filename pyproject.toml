@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autonomous-intelligence"
+version = "0.2.0"
+description = "Transactional MCP server and execution broker for Windows desktop agents"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Autonomous Intelligence" }]
+keywords = ["mcp", "ai-agents", "automation", "safety", "windows"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Win32 (MS Windows)",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+]
+dependencies = ["mcp>=2,<3"]
+
+[project.urls]
+Homepage = "https://github.com/coldrazer/autonomous-intelligence"
+Repository = "https://github.com/coldrazer/autonomous-intelligence"
+Issues = "https://github.com/coldrazer/autonomous-intelligence/issues"
+Documentation = "https://github.com/coldrazer/autonomous-intelligence#readme"
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[project.scripts]
+autonomous-intelligence = "autonomous_intelligence.cli:main"
+autonomous-intelligence-mcp = "autonomous_intelligence.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-q"
