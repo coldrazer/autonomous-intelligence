@@ -11,11 +11,12 @@ permissions:
 
 jobs:
   test:
-    name: Windows / Python ${{ matrix.python-version }}
-    runs-on: windows-latest
+    name: ${{ matrix.os }} / Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [windows-latest, ubuntu-latest]
         python-version: ["3.11", "3.12"]
 
     steps:

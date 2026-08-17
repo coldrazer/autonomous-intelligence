@@ -9,6 +9,7 @@
 [![MCP 2](https://img.shields.io/badge/MCP-2.0-5A45FF)](https://modelcontextprotocol.io/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Platform: Windows](https://img.shields.io/badge/platform-Windows-0078D4?logo=windows)](https://www.microsoft.com/windows)
+[![GHCR](https://img.shields.io/badge/package-GHCR-2496ED?logo=docker&logoColor=white)](https://github.com/coldrazer/autonomous-intelligence/packages)
 
 Autonomous Intelligence exposes capability-scoped computer actions through MCP while keeping execution, approval, and crash recovery behind a separate local Broker.
 
@@ -169,6 +170,16 @@ approval_mode = "prompt"
 
 A generic host configuration is also available in [`mcp-config.example.json`](mcp-config.example.json). See [`docs/CLIENT_SETUP.md`](docs/CLIENT_SETUP.md) for Claude Code, Kimi, Antigravity, Gemini CLI, Cursor, VS Code, and generic stdio clients.
 
+### GitHub Container package
+
+Container-oriented MCP hosts can pull the signed multi-platform OCI image:
+
+```powershell
+docker pull ghcr.io/coldrazer/autonomous-intelligence:0.3.1
+```
+
+The native wheel is recommended for Windows desktop use. Container deployments run the Broker and MCP adapter separately with a shared state volume; see the [container guide](docs/CONTAINER.md) for the exact commands and security boundary.
+
 ## Direct CLI
 
 The diagnostic CLI uses the same Engine, Broker, policy, and journals:
@@ -245,6 +256,7 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the wire and recovery contract an
 - [x] Capability-scoped semantic file actions
 - [x] MCP v2 stdio adapter
 - [x] Codex, Claude, Kimi, Antigravity, Gemini, Cursor, and VS Code setup assets
+- [x] Multi-platform GitHub Container package with SBOM and provenance
 - [x] Windows named-pipe integration tests
 - [ ] Read-only Windows UI Automation observation adapter
 - [ ] Structural UI fingerprints and ambiguity rejection
