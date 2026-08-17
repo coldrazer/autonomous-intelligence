@@ -1,13 +1,12 @@
 {
-  "mcpServers": {
+  "servers": {
     "autonomous-intelligence": {
       "type": "stdio",
       "command": "autonomous-intelligence-mcp",
       "args": [
         "--workspace",
-        "C:\\path\\to\\allowed-workspace"
-      ],
-      "env": {}
+        "${workspaceFolder}"
+      ]
     }
   }
 }

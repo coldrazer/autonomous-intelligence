@@ -1,0 +1,10 @@
+[mcp_servers.autonomous-intelligence]
+command = "autonomous-intelligence-mcp"
+args = ["--workspace", "."]
+cwd = "."
+startup_timeout_sec = 20
+tool_timeout_sec = 120
+default_tools_approval_mode = "auto"
+
+[mcp_servers.autonomous-intelligence.tools.autonomous_write_file]
+approval_mode = "prompt"

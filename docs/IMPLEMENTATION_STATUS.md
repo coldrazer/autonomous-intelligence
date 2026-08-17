@@ -1,6 +1,6 @@
 # Implementation status
 
-## v0.2 MCP vertical slice
+## v0.3 MCP vertical slice
 
 | Contract | Status | Evidence |
 |---|---|---|
@@ -16,6 +16,7 @@
 | Typed MCP tool schemas | Implemented | Five constrained tools with descriptions and annotations |
 | MCP error signaling | Implemented | Correctable failures produce `is_error=true` tool results |
 | MCP resources | Implemented | `autonomous-intelligence://capabilities` |
+| Host-neutral client configuration | Implemented | Codex, Claude, Kimi, Antigravity, Gemini, Cursor, VS Code, and generic renderers |
 | Windows UI Automation | Not yet implemented | Requires a trusted target resolver and input-contention guard |
 | Browser CDP adapter | Not yet implemented | Must bind targets to browser profile, process, origin, frame, and structural revision |
 | LLM goal planner | Supplied by MCP host | Server accepts only typed semantic tool calls |

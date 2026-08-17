@@ -5,9 +5,8 @@
       "command": "autonomous-intelligence-mcp",
       "args": [
         "--workspace",
-        "C:\\path\\to\\allowed-workspace"
-      ],
-      "env": {}
+        "${CLAUDE_PROJECT_DIR:-.}"
+      ]
     }
   }
 }

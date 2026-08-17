@@ -4,17 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "autonomous-intelligence"
-version = "0.2.0"
-description = "Transactional MCP server and execution broker for Windows desktop agents"
+version = "0.3.0"
+description = "Host-neutral transactional MCP server and execution broker for AI agents"
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "MIT" }
+license = "MIT"
 authors = [{ name = "Autonomous Intelligence" }]
-keywords = ["mcp", "ai-agents", "automation", "safety", "windows"]
+keywords = ["mcp", "ai-agents", "automation", "safety", "windows", "codex", "claude"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Win32 (MS Windows)",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: Microsoft :: Windows",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",

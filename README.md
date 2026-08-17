@@ -12,7 +12,7 @@
 
 Autonomous Intelligence exposes capability-scoped computer actions through MCP while keeping execution, approval, and crash recovery behind a separate local Broker.
 
-[Getting started](#getting-started) · [MCP tools](#mcp-interface) · [Safety model](#safety-model) · [Architecture](#architecture) · [Contributing](CONTRIBUTING.md)
+[Getting started](#getting-started) · [Client compatibility](#client-compatibility) · [MCP tools](#mcp-interface) · [Safety model](#safety-model) · [Architecture](#architecture) · [Contributing](CONTRIBUTING.md)
 
 </div>
 
@@ -61,6 +61,23 @@ The `autonomous-intelligence://capabilities` resource describes the active works
 
 Tool failures are returned through MCP as `is_error=true`, allowing a host model to correct invalid paths or arguments without mistaking an error string for success.
 
+## Client compatibility
+
+The server is model-agnostic and host-neutral. It speaks MCP over stdio and does not call a vendor-specific LLM API.
+
+| Client | Configuration included | Status |
+|---|---|---|
+| OpenAI Codex CLI, IDE, and ChatGPT desktop | `.codex/config.toml` | Supported |
+| Claude Code | `.mcp.json` | Supported |
+| Kimi Code CLI | `.kimi-code/mcp.json` | Supported |
+| Google Antigravity IDE and CLI | `.agents/mcp_config.json` | Supported |
+| Gemini CLI | `.gemini/settings.json` | Supported |
+| Cursor | `.cursor/mcp.json` | Supported |
+| VS Code / GitHub Copilot | `.vscode/mcp.json` | Supported |
+| Other local MCP clients | `mcp-config.example.json` | Standard stdio fallback |
+
+Use the complete [multi-client setup guide](docs/CLIENT_SETUP.md) for global and project-scoped installation, verification commands, and client-specific approval behavior.
+
 ## Architecture
 
 ```mermaid
@@ -106,7 +123,18 @@ autonomous-intelligence --workspace C:\path\to\allowed-workspace broker
 
 The Broker denies writes by default unless the exact operation is approved. `--approval-mode allow` exists only for disposable automated tests.
 
-### 2. Add the MCP server to Codex
+### 2. Connect an LLM client
+
+Generate configuration for any supported host without modifying its files:
+
+```powershell
+autonomous-intelligence --workspace C:\path\to\allowed-workspace `
+  client-config claude
+```
+
+Valid client names are `codex`, `claude`, `kimi`, `antigravity`, `gemini`, `cursor`, `vscode`, and `generic`.
+
+For Codex, the direct registration command is:
 
 With the virtual environment active:
 
@@ -139,7 +167,7 @@ default_tools_approval_mode = "auto"
 approval_mode = "prompt"
 ```
 
-A generic host configuration is also available in [`mcp-config.example.json`](mcp-config.example.json).
+A generic host configuration is also available in [`mcp-config.example.json`](mcp-config.example.json). See [`docs/CLIENT_SETUP.md`](docs/CLIENT_SETUP.md) for Claude Code, Kimi, Antigravity, Gemini CLI, Cursor, VS Code, and generic stdio clients.
 
 ## Direct CLI
 
@@ -206,6 +234,7 @@ The tests cover:
 - Workspace escapes and protected state paths
 - Crash recovery before and after side effects
 - MCP schemas, annotations, resources, and tool-error semantics
+- Host-specific configuration rendering for eight MCP client formats
 - The complete Windows subprocess chain: MCP client → stdio server → named pipe → Broker → workspace
 
 See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the wire and recovery contract and [`docs/IMPLEMENTATION_STATUS.md`](docs/IMPLEMENTATION_STATUS.md) for current scope and roadmap.
@@ -215,6 +244,7 @@ See [`docs/PROTOCOL.md`](docs/PROTOCOL.md) for the wire and recovery contract an
 - [x] Transactional Engine and authoritative Broker ledger
 - [x] Capability-scoped semantic file actions
 - [x] MCP v2 stdio adapter
+- [x] Codex, Claude, Kimi, Antigravity, Gemini, Cursor, and VS Code setup assets
 - [x] Windows named-pipe integration tests
 - [ ] Read-only Windows UI Automation observation adapter
 - [ ] Structural UI fingerprints and ambiguity rejection

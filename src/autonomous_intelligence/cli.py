@@ -4,10 +4,12 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import sys
 from pathlib import Path
 
 from .broker import ExecutionBroker, interactive_approval
+from .client_config import SUPPORTED_CLIENTS, client_config_location, render_client_config
 from .engine import AutonomousEngine
 from .ipc import BrokerServer, RemoteBrokerClient, default_pipe_name, load_or_create_ipc_key
 from .models import ActionRequest
@@ -63,11 +65,32 @@ def build_parser() -> argparse.ArgumentParser:
     status = subparsers.add_parser("status", help="Show an attempt's broker status")
     status.add_argument("attempt_id")
     subparsers.add_parser("shutdown", help="Stop the broker")
+    client_config = subparsers.add_parser(
+        "client-config",
+        help="Render a safe MCP configuration for a supported LLM client",
+    )
+    client_config.add_argument("client", choices=SUPPORTED_CLIENTS)
+    client_config.add_argument(
+        "--mcp-command",
+        help="MCP executable path (defaults to the executable found on PATH)",
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+
+    if args.command == "client-config":
+        workspace = Path(args.workspace).resolve()
+        mcp_command = (
+            args.mcp_command
+            or shutil.which("autonomous-intelligence-mcp")
+            or "autonomous-intelligence-mcp"
+        )
+        print(f"# Target: {client_config_location(args.client)}")
+        print(render_client_config(args.client, workspace, command=mcp_command), end="")
+        return 0
+
     workspace, state_dir, address, key = _paths(args)
 
     if args.command == "broker":
